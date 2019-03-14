@@ -1,3 +1,3 @@
 #!/bin/sh
-php-fpm7 -D
+php-fpm7
 nginx -g daemon\ off\;
