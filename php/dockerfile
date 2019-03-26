@@ -51,4 +51,4 @@ ADD ./start.sh /
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /www
 RUN composer require grpc/grpc
-CMD ["/bin/sh", "start.sh"]
+CMD ["/bin/sh", "/start.sh"]
