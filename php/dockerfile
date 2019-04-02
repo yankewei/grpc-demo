@@ -1,7 +1,8 @@
-FROM centos:7
-ADD ./daemon.txt /
-RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
-    && rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
-RUN yum makecache \
-    && yum -y install php72w-fpm php72w-cli php72w-devel php72w-pear
-CMD ["tail", "-f", "daemon.txt"]
+FROM php:7.3-alpine
+ADD ./code /Code/
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+RUN apk add --no-cache libstdc++ ${PHPIZE_DEPS} \
+    && pecl install swoole \
+    && docker-php-ext-enable swoole \
+    && apk del ${PHPIZE_DEPS}
+CMD ["php", "/Code/index.php"]
